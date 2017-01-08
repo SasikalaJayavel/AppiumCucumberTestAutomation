@@ -15,7 +15,7 @@ public class HomeScreenSteps extends AbstractSteps {
     @Given("^(I am|User is) already in the home screen$")
     public void assert_Home_Screen(String suffix)
     {
-        WaitUtils.wait_For_Visibility_Of_Element(homeScreen.driver, By.id("search_button"), 15);
+        WaitUtils.wait_For_Visibility_Of_Element(homeScreen.driver, By.xpath("//android.widget.TextView[@text='Accessibility']"), 15);
     }
 
     @When("^I click on (.*?) (button|link) on the home screen$")

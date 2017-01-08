@@ -62,52 +62,28 @@ public class BrowserFactory
     private AppiumDriver<? extends MobileElement> driver;
 
     @Bean(destroyMethod = "quit")
-//    @Scope("cucumber-glue")
+
     public AppiumDriver<? extends MobileElement> getDriver() throws MalformedURLException
     {
-        String platform_Name = System.getProperty("platform");
-        System.out.println("platform_Name: " + platform_Name);
-        switch (platform_Name)
-        {
-            /** for all the tests the appium can be started in the command line with just the command : appium, unleass otherwise stated */
 
-            case "androidDeviceInstallLaunchFromDOTapk":
-            default:
-            {
-                /**
-                 * This test is for testing Native or Hybrid apps with Webview by installing from the available .apk file
-                 * and launching afresh in a android physical device
-                 * In the device: Inside Developer options -> Select USB Configuration -> Enable MTP(Media Transfer protocol as the USB configuration
-                 * /
+        System.out.println("Inside androidTuEmulatorLaunchAlreadyInstalled");
+        capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.6.3");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "6.0");
+        capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
+        capabilities.setCapability("appPackage", "io.appium.android.apis");
+        capabilities.setCapability("appActivity","io.appium.android.apis.ApiDemos");
+        capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
+        capabilities.setCapability("unicodeKeyboard", "true");
+        capabilities.setCapability("resetKeyboard", "true");
 
-                 /**
-                 * This works but the webview context switching was not enabled and therefore there only one context.
-                 * Since there was only one context when running in the real android device @AndroidFindBy page factory itself works
-                 * for finding the elements
-                 */
+        serverUrl = new URL("http://localhost:" + appiumPort + "/wd/hub");
+        driver = new AndroidDriver(serverUrl, capabilities);
+        driver.manage().timeouts().implicitlyWait(implicitWaitTime, TimeUnit.SECONDS);
+        return driver;
 
-
-                capabilities = new DesiredCapabilities();
-                capabilities.setCapability(MobileCapabilityType.APPIUM_VERSION, "1.6.3");
-                capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9.3.2");
-                capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, browserName); //= empty String""
-                capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion); // = "6.0.1"
-                capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, platformName); // = "Android"
-                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName); // = "Android"
-                capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, androidinstrumentation); // = "Appium"
-                capabilities.setCapability(MobileCapabilityType.APP, new File(ClassLoader.getSystemResource(appPath)
-                        .getFile()).getAbsolutePath());
-                capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
-                capabilities.setCapability("unicodeKeyboard", "true");
-                capabilities.setCapability("resetKeyboard", "true");
-
-                serverUrl = new URL("http://localhost:" + appiumPort + "/wd/hub");
-                driver = new AndroidDriver(serverUrl, capabilities);
-                driver.manage().timeouts().implicitlyWait(implicitWaitTime, TimeUnit.SECONDS);
-                return driver;
-
-            }
-
-        }
     }
 }

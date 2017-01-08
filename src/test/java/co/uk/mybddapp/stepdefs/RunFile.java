@@ -11,7 +11,10 @@ import org.junit.runner.RunWith;
 import java.io.File;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = "json:target/cucumber.json",
+@CucumberOptions(
+//        format = { "pretty",
+//        "json:target/cucumber.json",
+//        "html:target/site/cucumber-pretty"},
         glue = "co.uk.mybddapp.stepdefs" ,
         features="src/test/resources/features",
         tags="@solo")

@@ -67,9 +67,12 @@
                 <version>2.18.1</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <workingDirectory>${basedir}</workingDirectory>
+                    <includes>
+                        <exclude>**/*RunFile.java</exclude>
+                    </includes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
